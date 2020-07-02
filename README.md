@@ -1,1 +1,3 @@
 # MentalityCalculator
+
+For Football Manager
