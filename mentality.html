@@ -1,0 +1,341 @@
+﻿<html>
+<head>
+    <style>
+        .rTable {
+            display: table;
+            
+        }
+        .rTableRow { display: table-row; }
+        .rTableHeading { display: table-header-group; }
+        .rTableBody { display: table-row-group; }
+        .rTableFoot { display: table-footer-group; }
+        .rTableCell, .rTableHead { display: table-cell;
+            padding: 3px 10px;
+            border: 1px solid #999999;
+        }
+
+        .rTable1 {
+            display: table;
+            width: 50%;
+            background-color: #008000
+        }
+    </style>
+</head>
+<body>
+    <div class="rTable">
+        <div class="rTableRow">
+            <div class="rTableCell"> Team Mentality</div>
+            <div class="rTableCell">
+                <select id="teamMentalitySelect"></select>
+                <label id="teamMentalityLabel"></label>
+            </div>
+        </div>
+        <div class="rTableRow">
+            <div class="rTableCell">  Approach Play Left</div>
+            <div class="rTableCell">
+                <select id="approachPlayLeft">
+                    <option value="" selected="selected">None
+                    <option value="">Overlap Left
+                    <option value="">Underlap Left
+                </select>
+            </div>
+        </div>
+        <div class="rTableRow">
+            <div class="rTableCell">  Approach Play Right</div>
+            <div class="rTableCell">
+                <select id="approachPlayRight">
+                    <option value="" selected="selected">None
+                    <option value="">Overlap Right
+                    <option value="">Underlap Right
+                </select>
+            </div>
+        </div>
+
+        <div class="rTableRow">
+            <div class="rTableCell">  Focus The Play</div>
+            <div class="rTableCell">
+                <select id="approachPlayRight">
+                    <option value="" selected="selected">None
+                    <option value="">Focus play through the middle
+                    <option value="">Focus play down the left
+                    <option value="">Focus play down the right
+                    <option value="">Focus play down both flanks
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="rTable1">
+        <div class="rTableRow">
+            <div class="rTableCell"></div>
+            <div class="rTableCell"  id="tc24"></div>
+            <div class="rTableCell"  id="tc23"></div>
+            <div class="rTableCell"  id="tc22"></div>
+            <div class="rTableCell"></div>
+        </div>
+        <div class="rTableRow">
+            <div class="rTableCell"  id="tc21"></div>
+            <div class="rTableCell" id="tc20"></div>
+            <div class="rTableCell" id="tc19"></div>
+            <div class="rTableCell" id="tc18"></div>
+            <div class="rTableCell" id="tc17"></div>
+        </div>
+        <div class="rTableRow">
+            <div class="rTableCell" id="tc16"></div>
+            <div class="rTableCell" id="tc15"></div>
+            <div class="rTableCell" id="tc14"></div>
+            <div class="rTableCell" id="tc13"></div>
+            <div class="rTableCell" id="tc12"></div>
+        </div>
+        <div class="rTableRow">
+            <div class="rTableCell" id="tc11"></div>
+            <div class="rTableCell" id="tc10"></div>
+            <div class="rTableCell" id="tc9"></div>
+            <div class="rTableCell" id="tc8"></div>
+            <div class="rTableCell" id="tc7"></div>
+        </div>
+        <div class="rTableRow">
+            <div class="rTableCell" id="tc6"></div>
+            <div class="rTableCell" id="tc5"></div>
+            <div class="rTableCell" id="tc4"></div>
+            <div class="rTableCell" id="tc3"></div>
+            <div class="rTableCell" id="tc2"></div>
+        </div>
+        <div class="rTableRow">
+            <div class="rTableCell"></div>
+            <div class="rTableCell"></div>
+            <div class="rTableCell" id="tc1"></div>
+            <div class="rTableCell"></div>
+            <div class="rTableCell"></div>
+        </div>
+    </div>
+
+<script>
+    function toggle(element) {
+        if (element.style.visibility === elementVisibilityCollection[0]) {
+            element.style.visibility = elementVisibilityCollection[1];
+        } else {
+            element.style.visibility = elementVisibilityCollection[0];
+        }
+    }
+
+    function myFunction() {
+        var toToggle = document.getElementById("myDiv");
+        this.toggle(toToggle);
+    }
+
+    function populateSelect2(dropDownName, data) {
+        for (var i = 0; i < data.length; i++) {
+            var opt = data[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = i;
+            document.getElementById(dropDownName).appendChild(el);
+        };
+    }
+
+    function selectElement(id, valueToSelect) {
+        const element = document.getElementById(id);
+        element.value = valueToSelect;
+    }
+     
+    function getDuty(selectElement, mentality) {
+        for (var i = 0; i < this.duty[mentality].length; i++) {
+            var opt = this.duty[mentality][i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = i;
+            selectElement.appendChild(el);
+        }
+    }
+
+    function populateSelect(id, mentality) {
+        var element = document.getElementById("select" + id)
+        this.getDuty(element, mentality);
+    }
+
+    function createLabel(id) {
+        var positionMentalityLabel = document.createElement("label");
+        var att = document.createAttribute("id");
+        att.value = "positionMentality" + id;
+        positionMentalityLabel.setAttributeNode(att);
+        return positionMentalityLabel;
+    }
+
+    function createEmptySelect(id) {
+        var selectElement = document.createElement("select");
+        var att = document.createAttribute("id");
+        att.value = "select" + id;
+        selectElement.setAttributeNode(att);
+        return selectElement;
+    }
+
+    function createElementAndId(id, elementName) {
+        var selectElement = document.createElement(elementName);
+        var att = document.createAttribute("id");
+        att.value = elementName + id;
+        selectElement.setAttributeNode(att);
+        return selectElement;
+    }
+
+    function createTextNode(positionLabel) {
+        var t = document.createTextNode(positionLabel);     
+        h.appendChild(t); 
+    }
+
+    function createSquare(id, positionLabel) {
+        var tc = document.getElementById("tc" + id);
+        var containerDiv = createElementAndId(id, "div");
+
+        var textNode = document.createTextNode(positionLabel);
+        containerDiv.appendChild(textNode);
+         
+        var innerDiv = this.createElementAndId(id, "div");
+        innerDiv.appendChild(this.createEmptySelect(id));        
+        innerDiv.appendChild(this.createLabel(id));
+        containerDiv.appendChild(innerDiv); 
+
+        tc.appendChild(containerDiv);
+    }
+
+    function initialisePositionMentality() {
+        var positionMentality = [];
+        var length = 24;
+        for (var i = 0; i < length; i++) {
+            positionMentality.push(3);
+            var id = `positionMentality${i + 1}`;
+            console.log(id);
+            var positionMentalityLabel = document.getElementById(id);
+
+            if (typeof positionMentalityLabel !== "undefined") {
+                positionMentalityLabel.innerHTML = teamMentality[positionMentality[i]];
+            }
+
+
+        }
+    }    
+
+    //overlap left add one to LB, ML minus one, AML minus one
+    //underlap left ML minus one, AML minus one
+
+    //focus through the middle - GK + 1, CD +1, DM + 1
+    //focus play down left LB +1, WBL + 1
+
+
+    var teamMentality = [
+        "Select",
+        "Very Defensive" ,
+        "Defensive" ,
+        "Cautious",
+        "Balanced",
+        "Positive",
+        "Attacking",
+        "Very Attacking" 
+    ];
+    
+    var oldTeamMentality = 3;
+
+    var input = document.querySelector('#teamMentalitySelect');
+
+    var result = document.querySelector('#teamMentalityLabel');
+
+    input.addEventListener('change', function () {
+        var teamMentalityIndex = this.value;
+        
+        result.textContent = teamMentality[teamMentalityIndex];
+
+
+        for (var i = 0; i < length; i++) {
+
+            positionMentality[i] = parseInt(teamMentalityIndex);
+
+
+            var id = `positionMentality${i + 1}`;
+            console.log(id);
+            var positionMentalityLabel = document.getElementById(id);
+
+            if (typeof positionMentalityLabel !== "undefined") {
+                positionMentalityLabel.innerHTML = teamMentality[positionMentality[i]];
+            }
+        }
+    });
+
+
+    
+
+
+    var duty = {
+        1: ['Select','D', 'S', 'A'],
+        2: ['Select','D', 'Co', 'St'],
+        3: ['Select','AM-S', 'AM-A', 'IF-S', 'IF-A'],
+        4: ['Select','S', 'A']
+    }
+    
+    var somethingAboutMary = [
+        { id: 1, dropDownId: '1', position: "GK"},
+        { id: 2, dropDownId: '1', position: "DR" },
+        { id: 3, dropDownId: '2', position: "DCR" },
+        { id: 4, dropDownId: '2', position: "DC" },
+        { id: 5, dropDownId: '2', position: "DCL" },
+        { id: 6, dropDownId: '1', position: "DL" },
+        { id: 7, dropDownId: '1', position: "WBR" },
+        { id: 8, dropDownId: '1', position: "DMR" },
+        { id: 9, dropDownId: '1', position: "DMC" },
+        { id: 10, dropDownId: '1', position: "DML" },
+        { id: 11, dropDownId: '1', position: "WBL" },
+        { id: 12, dropDownId: '1', position: "MR" },
+        { id: 13, dropDownId: '1', position: "MCR"},
+        { id: 14, dropDownId: '1', position: "MC"},
+        { id: 15, dropDownId: '1', position: "MCL"},
+        { id: 16, dropDownId: '1', position: "ML"},
+        { id: 17, dropDownId: '3', position: "AMR" },
+        { id: 18, dropDownId: '4', position: "AMCR"},
+        { id: 19, dropDownId: '4', position: "AMC"},
+        { id: 20, dropDownId: '4', position: "AMCL"},
+        { id: 21, dropDownId: '3', position: "AML"},
+        { id: 22, dropDownId: '1', position: "STR"},
+        { id: 23, dropDownId: '1', position: "STC"},
+        { id: 24, dropDownId: '1', position: "STL"}
+
+    ];
+
+    var elementVisibilityCollection = ["visible", "hidden"];
+
+    somethingAboutMary.forEach((x) => {
+        this.createSquare(x.id, x.position);
+        this.populateSelect(x.id, x.dropDownId);
+
+        //var initial = document.getElementById("div" + id);
+        //initial.style.visibility = elementVisibilityCollection[0]
+
+
+        var input = document.querySelector('#select' + x.id);
+
+        var result = document.querySelector('#positionMentality' + x.id);
+
+        input.addEventListener('change', function () {
+
+            var mentalityIndex = this.value;
+
+            if (mentalityIndex > 0) {
+                result.textContent = mentalityIndex;
+            }
+
+            
+        });
+
+
+    });    
+
+    populateSelect2("teamMentalitySelect", this.teamMentality);
+    
+    //selectElement('teamMentalitySelect', '3');
+
+    //var teamMentalityLabel = document.getElementById("teamMentalityLabel"); 
+
+    //teamMentalityLabel.innerHTML = teamMentality[3];
+
+</script>
+</body>
+
+
+</html>
