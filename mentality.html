@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
     <style>
         .rTable {
@@ -110,6 +110,16 @@
     </div>
 
 <script>
+    function getTeamMentality() {
+        var teamMentalitySelect = document.getElementById("teamMentalitySelect");
+
+        if (teamMentalitySelect === 'undefined') return 0;
+
+        if (teamMentalitySelect.options.length === 0) return 0;
+
+        return teamMentalitySelect.options[teamMentalitySelect.selectedIndex].value;
+    }
+
     function toggle(element) {
         if (element.style.visibility === elementVisibilityCollection[0]) {
             element.style.visibility = elementVisibilityCollection[1];
@@ -221,6 +231,35 @@
     //focus play down left LB +1, WBL + 1
 
 
+
+
+
+
+    var duty = {
+        1: ['Select', 'D', 'S', 'A'],
+        2: ['Select', 'D', 'Co', 'St'],
+        3: ['Select', 'AM-S', 'AM-A', 'IF-S', 'IF-A'],
+        4: ['Select', 'S', 'A'],
+        5: ['Select', 'D', 'Co', 'St', 'S', 'A'],
+    }
+
+   
+
+    
+    var oldTeamMentality = 3;
+
+    var teamMentalitySelect = document.querySelector('#teamMentalitySelect');
+
+    var teamMentalityLabel = document.querySelector('#teamMentalityLabel');
+    
+    teamMentalitySelect.addEventListener('change', function () {
+        var teamMentalityIndex = this.value;
+
+        console.log(teamMentalityIndex);
+        
+        teamMentalityLabel.textContent = teamMentality[teamMentalityIndex];
+    });
+
     var teamMentality = [
         "Select",
         "Very Defensive" ,
@@ -231,108 +270,73 @@
         "Attacking",
         "Very Attacking" 
     ];
-    
-    var oldTeamMentality = 3;
 
-    var input = document.querySelector('#teamMentalitySelect');
-
-    var result = document.querySelector('#teamMentalityLabel');
-
-    input.addEventListener('change', function () {
-        var teamMentalityIndex = this.value;
-        
-        result.textContent = teamMentality[teamMentalityIndex];
-
-
-        for (var i = 0; i < length; i++) {
-
-            positionMentality[i] = parseInt(teamMentalityIndex);
-
-
-            var id = `positionMentality${i + 1}`;
-            console.log(id);
-            var positionMentalityLabel = document.getElementById(id);
-
-            if (typeof positionMentalityLabel !== "undefined") {
-                positionMentalityLabel.innerHTML = teamMentality[positionMentality[i]];
-            }
-        }
-    });
-
-
-    
-
-
-    var duty = {
-        1: ['Select','D', 'S', 'A'],
-        2: ['Select','D', 'Co', 'St'],
-        3: ['Select','AM-S', 'AM-A', 'IF-S', 'IF-A'],
-        4: ['Select','S', 'A']
-    }
-    
-    var somethingAboutMary = [
-        { id: 1, dropDownId: '1', position: "GK"},
-        { id: 2, dropDownId: '1', position: "DR" },
-        { id: 3, dropDownId: '2', position: "DCR" },
-        { id: 4, dropDownId: '2', position: "DC" },
-        { id: 5, dropDownId: '2', position: "DCL" },
-        { id: 6, dropDownId: '1', position: "DL" },
-        { id: 7, dropDownId: '1', position: "WBR" },
-        { id: 8, dropDownId: '1', position: "DMR" },
-        { id: 9, dropDownId: '1', position: "DMC" },
-        { id: 10, dropDownId: '1', position: "DML" },
-        { id: 11, dropDownId: '1', position: "WBL" },
-        { id: 12, dropDownId: '1', position: "MR" },
-        { id: 13, dropDownId: '1', position: "MCR"},
-        { id: 14, dropDownId: '1', position: "MC"},
-        { id: 15, dropDownId: '1', position: "MCL"},
-        { id: 16, dropDownId: '1', position: "ML"},
-        { id: 17, dropDownId: '3', position: "AMR" },
-        { id: 18, dropDownId: '4', position: "AMCR"},
-        { id: 19, dropDownId: '4', position: "AMC"},
-        { id: 20, dropDownId: '4', position: "AMCL"},
-        { id: 21, dropDownId: '3', position: "AML"},
-        { id: 22, dropDownId: '1', position: "STR"},
-        { id: 23, dropDownId: '1', position: "STC"},
-        { id: 24, dropDownId: '1', position: "STL"}
+    var positionMatrix = [
+        { id: 1,  dropDownId: '1', position: "GK",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 2,  dropDownId: '1', position: "DR",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 3,  dropDownId: '2', position: "DCR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 4,  dropDownId: '5', position: "DC",   1: [0, 1, 1, 1, 2, 3, 5, 5], 2: [0, 1, 1, 1, 2, 3, 4, 4], 3: [0, 2, 2, 2, 3, 4, 5, 6] },
+        { id: 5,  dropDownId: '2', position: "DCL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 6,  dropDownId: '1', position: "DL",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 7,  dropDownId: '1', position: "WBR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 8,  dropDownId: '1', position: "DMR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 9,  dropDownId: '1', position: "DMC",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 10, dropDownId: '1', position: "DML",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 11, dropDownId: '1', position: "WBL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 12, dropDownId: '1', position: "MR",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 13, dropDownId: '1', position: "MCR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 14, dropDownId: '1', position: "MC",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 15, dropDownId: '1', position: "MCL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 16, dropDownId: '1', position: "ML",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 17, dropDownId: '3', position: "AMR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 18, dropDownId: '4', position: "AMCR", 1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 19, dropDownId: '4', position: "AMC",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 20, dropDownId: '4', position: "AMCL", 1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 21, dropDownId: '3', position: "AML",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 22, dropDownId: '1', position: "STR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 23, dropDownId: '1', position: "STC",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
+        { id: 24, dropDownId: '1', position: "STL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] }
 
     ];
 
     var elementVisibilityCollection = ["visible", "hidden"];
-
-    somethingAboutMary.forEach((x) => {
+    
+    positionMatrix.forEach((x) => {
         this.createSquare(x.id, x.position);
         this.populateSelect(x.id, x.dropDownId);
 
-        //var initial = document.getElementById("div" + id);
-        //initial.style.visibility = elementVisibilityCollection[0]
 
+        var positionSelect = document.querySelector('#select' + x.id);
+        var positionMentalityId = document.querySelector('#positionMentality' + x.id);
+        positionMentalityId.InnerHTML = "Empty";
 
-        var input = document.querySelector('#select' + x.id);
+        positionSelect.addEventListener('change', function () {
 
-        var result = document.querySelector('#positionMentality' + x.id);
+            var teamMentalitySelect = document.getElementById("teamMentalitySelect");
+            
+            var selectedMentality = teamMentalitySelect.options[teamMentalitySelect.selectedIndex].value;
 
-        input.addEventListener('change', function () {
+            console.log(selectedMentality);
 
             var mentalityIndex = this.value;
 
-            if (mentalityIndex > 0) {
-                result.textContent = mentalityIndex;
+            if (selectedMentality > 0 && mentalityIndex > 0) {
+                
+                console.log(x[mentalityIndex][selectedMentality]);
+
+                var index = x[mentalityIndex][selectedMentality];
+
+                console.log(teamMentality[index]);
+
+                positionMentalityId.textContent = teamMentality[index];
             }
-
-            
         });
-
-
-    });    
-
-    populateSelect2("teamMentalitySelect", this.teamMentality);
+    }); 
     
-    //selectElement('teamMentalitySelect', '3');
+    populateSelect2("teamMentalitySelect", this.teamMentality);
 
-    //var teamMentalityLabel = document.getElementById("teamMentalityLabel"); 
-
-    //teamMentalityLabel.innerHTML = teamMentality[3];
+    //TODO
+    //When the Team Mentality is changed, update each position
 
 </script>
 </body>
