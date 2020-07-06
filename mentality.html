@@ -19,6 +19,10 @@
             width: 50%;
             background-color: #008000
         }
+
+        .position {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -168,6 +172,11 @@
         var att = document.createAttribute("id");
         att.value = "positionMentality" + id;
         positionMentalityLabel.setAttributeNode(att);
+
+        att = document.createAttribute("class");
+        att.value = "position";
+        positionMentalityLabel.setAttributeNode(att);
+
         return positionMentalityLabel;
     }
 
@@ -271,33 +280,41 @@
         "Very Attacking" 
     ];
 
-   var positionMatrix = [
-        { id: 1,  dropDownId: '1', position: "GK",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 2,  dropDownId: '1', position: "DR",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 3,  dropDownId: '2', position: "DCR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 4, dropDownId: '5', position: "DC", 1: [0, 1, 1, 1, 2, 3, 5, 5], 2: [0, 1, 1, 1, 2, 3, 4, 4], 3: [0, 2, 2, 2, 3, 4, 5, 6], 4: [0, 3, 3, 3, 4, 5, 5, 5], 5: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 5,  dropDownId: '2', position: "DCL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 6,  dropDownId: '1', position: "DL",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 7,  dropDownId: '1', position: "WBR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 8,  dropDownId: '1', position: "DMR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 9,  dropDownId: '1', position: "DMC",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 10, dropDownId: '1', position: "DML",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 11, dropDownId: '1', position: "WBL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 12, dropDownId: '1', position: "MR",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 13, dropDownId: '1', position: "MCR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 14, dropDownId: '1', position: "MC",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 15, dropDownId: '1', position: "MCL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 16, dropDownId: '1', position: "ML",   1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 17, dropDownId: '3', position: "AMR", 1: [0, 3, 3, 3, 4, 5, 5, 5], 2: [0, 4, 4, 5, 7, 7, 7, 7], 3: [0, 3, 3, 3, 4, 5, 5, 5], 4: [0, 4, 4, 5, 7, 7, 7, 7]},
-        { id: 18, dropDownId: '4', position: "AMCR", 1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 19, dropDownId: '4', position: "AMC",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 20, dropDownId: '4', position: "AMCL", 1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 21, dropDownId: '3', position: "AML", 1: [0, 3, 3, 3, 4, 5, 5, 5], 2: [0, 4, 4, 5, 7, 7, 7, 7], 3: [0, 3, 3, 3, 4, 5, 5, 5], 4: [0, 4, 4, 5, 7, 7, 7, 7] },
+    var defCentreCo =  [0, 1, 1, 1, 2, 3, 3, 3];
+    var defCentreSt =  [0, 2, 2, 2, 3, 4, 4, 4];
+    var defenderAttack = [0, 4, 4, 5, 5, 6, 7, 7];
+  
+    var defendDuty = [0, 1, 1, 1, 2, 3, 4, 4];
+    var supportDuty = [0, 3, 3, 3, 4, 5, 5, 5];
+    var attackDuty =     [0, 4, 4, 5, 6, 7, 7, 7];
+
+    var positionMatrix = [
+        { id: 1, dropDownId: '1', position: "GK", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 2, dropDownId: '1', position: "DR", 1: defendDuty, 2: supportDuty, 3: defenderAttack },
+        { id: 3, dropDownId: '2', position: "DCR", 1: defendDuty, 2: defCentreCo, 3: defCentreSt },
+        { id: 4, dropDownId: '5', position: "DC", 1: defendDuty, 2: defCentreCo, 3: defCentreSt, 4: supportDuty, 5: defenderAttack },
+        { id: 5, dropDownId: '2', position: "DCL", 1: defendDuty, 2: defCentreCo, 3: defCentreSt },
+        { id: 6, dropDownId: '1', position: "DL", 1: defendDuty, 2: supportDuty, 3: defenderAttack },
+        { id: 7, dropDownId: '1', position: "WBR", 1: defendDuty, 2: supportDuty, 3: defenderAttack },
+        { id: 8, dropDownId: '1', position: "DMR", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 9, dropDownId: '1', position: "DMC", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 10, dropDownId: '1', position: "DML", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 11, dropDownId: '1', position: "WBL", 1: defendDuty, 2: supportDuty, 3: defenderAttack },
+        { id: 12, dropDownId: '1', position: "MR", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 13, dropDownId: '1', position: "MCR", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 14, dropDownId: '1', position: "MC", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 15, dropDownId: '1', position: "MCL", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 16, dropDownId: '1', position: "ML", 1: defendDuty, 2: supportDuty, 3: attackDuty },
+        { id: 17, dropDownId: '3', position: "AMR", 1: supportDuty, 2: attackDuty, 3: [0, 3, 3, 3, 4, 5, 5, 5], 4: [0, 4, 4, 5, 7, 7, 7, 7]},
+        { id: 18, dropDownId: '4', position: "AMCR", 1: [0, 1, 1, 1, 2, 3, 4, 4], 2: supportDuty, 3: attackDuty },
+        { id: 19, dropDownId: '4', position: "AMC", 1: [0, 1, 1, 1, 2, 3, 4, 4], 2: supportDuty, 3: attackDuty },
+        { id: 20, dropDownId: '4', position: "AMCL", 1: [0, 1, 1, 1, 2, 3, 4, 4], 2: supportDuty, 3: attackDuty },
+        { id: 21, dropDownId: '3', position: "AML", 1: supportDuty, 2: attackDuty, 3: [0, 3, 3, 3, 4, 5, 5, 5], 4: [0, 4, 4, 5, 7, 7, 7, 7] },
         { id: 22, dropDownId: '1', position: "STR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
         { id: 23, dropDownId: '1', position: "STC",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
         { id: 24, dropDownId: '1', position: "STL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] }
-    ];
 
+    ];
 
     var elementVisibilityCollection = ["visible", "hidden"];
     
