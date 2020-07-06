@@ -216,34 +216,12 @@
         tc.appendChild(containerDiv);
     }
 
-    function initialisePositionMentality() {
-        var positionMentality = [];
-        var length = 24;
-        for (var i = 0; i < length; i++) {
-            positionMentality.push(3);
-            var id = `positionMentality${i + 1}`;
-            console.log(id);
-            var positionMentalityLabel = document.getElementById(id);
-
-            if (typeof positionMentalityLabel !== "undefined") {
-                positionMentalityLabel.innerHTML = teamMentality[positionMentality[i]];
-            }
-
-
-        }
-    }    
-
     //overlap left add one to LB, ML minus one, AML minus one
     //underlap left ML minus one, AML minus one
 
     //focus through the middle - GK + 1, CD +1, DM + 1
     //focus play down left LB +1, WBL + 1
-
-
-
-
-
-
+    
     var duty = {
         1: ['Select', 'D', 'S', 'A'],
         2: ['Select', 'D', 'Co', 'St'],
@@ -252,9 +230,6 @@
         5: ['Select', 'D', 'Co', 'St', 'S', 'A'],
     }
 
-   
-
-    
     var oldTeamMentality = 3;
 
     var teamMentalitySelect = document.querySelector('#teamMentalitySelect');
@@ -262,11 +237,30 @@
     var teamMentalityLabel = document.querySelector('#teamMentalityLabel');
     
     teamMentalitySelect.addEventListener('change', function () {
-        var teamMentalityIndex = this.value;
+        var selectedTeamMentalityIndex = this.value;
 
-        console.log(teamMentalityIndex);
+        console.log(selectedTeamMentalityIndex);
         
-        teamMentalityLabel.textContent = teamMentality[teamMentalityIndex];
+        teamMentalityLabel.textContent = teamMentality[selectedTeamMentalityIndex];
+
+        positionMatrix.forEach((x) => {
+
+            var positionSelect = document.querySelector('#select' + x.id);
+            var positionMentalityId = document.querySelector('#positionMentality' + x.id);
+            
+            var positionMentalityIndex = positionSelect.options[positionSelect.selectedIndex].value;
+
+            if (selectedTeamMentalityIndex > 0 && positionMentalityIndex > 0) {
+
+                console.log(x[positionMentalityIndex][selectedTeamMentalityIndex]);
+
+                var index = x[positionMentalityIndex][selectedTeamMentalityIndex];
+
+                console.log(teamMentality[index]);
+
+                positionMentalityId.textContent = teamMentality[index];
+            }
+        });
     });
 
     var teamMentality = [
@@ -286,7 +280,7 @@
   
     var defendDuty = [0, 1, 1, 1, 2, 3, 4, 4];
     var supportDuty = [0, 3, 3, 3, 4, 5, 5, 5];
-    var attackDuty =     [0, 4, 4, 5, 6, 7, 7, 7];
+    var attackDuty = [0, 4, 4, 5, 6, 7, 7, 7];
 
     var positionMatrix = [
         { id: 1, dropDownId: '1', position: "GK", 1: defendDuty, 2: supportDuty, 3: attackDuty },
@@ -331,17 +325,17 @@
 
             var teamMentalitySelect = document.getElementById("teamMentalitySelect");
             
-            var selectedMentality = teamMentalitySelect.options[teamMentalitySelect.selectedIndex].value;
+            var selectedTeamMentality = teamMentalitySelect.options[teamMentalitySelect.selectedIndex].value;
 
-            console.log(selectedMentality);
+            console.log(selectedTeamMentality);
 
             var mentalityIndex = this.value;
 
-            if (selectedMentality > 0 && mentalityIndex > 0) {
+            if (selectedTeamMentality > 0 && mentalityIndex > 0) {
                 
-                console.log(x[mentalityIndex][selectedMentality]);
+                console.log(x[mentalityIndex][selectedTeamMentality]);
 
-                var index = x[mentalityIndex][selectedMentality];
+                var index = x[mentalityIndex][selectedTeamMentality];
 
                 console.log(teamMentality[index]);
 
@@ -352,8 +346,6 @@
     
     populateSelect2("teamMentalitySelect", this.teamMentality);
 
-    //TODO
-    //When the Team Mentality is changed, update each position
 
 </script>
 </body>
