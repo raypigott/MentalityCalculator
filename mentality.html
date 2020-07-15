@@ -28,43 +28,31 @@
 <body>
     <div class="rTable">
         <div class="rTableRow">
-            <div class="rTableCell"> Team Mentality</div>
+            <div class="rTableCell">Team Mentality</div>
             <div class="rTableCell">
                 <select id="teamMentalitySelect"></select>
                 <label id="teamMentalityLabel"></label>
             </div>
         </div>
         <div class="rTableRow">
-            <div class="rTableCell">  Approach Play Left</div>
+            <div class="rTableCell">Approach Play Left</div>
             <div class="rTableCell">
-                <select id="approachPlayLeft">
-                    <option value="" selected="selected">None
-                    <option value="">Overlap Left
-                    <option value="">Underlap Left
-                </select>
+                <select id="approachPlayLeftSelect"></select>
+                <label id="approachPlayLeftLabel"></label>
             </div>
         </div>
         <div class="rTableRow">
-            <div class="rTableCell">  Approach Play Right</div>
+            <div class="rTableCell">Approach Play Right</div>
             <div class="rTableCell">
-                <select id="approachPlayRight">
-                    <option value="" selected="selected">None
-                    <option value="">Overlap Right
-                    <option value="">Underlap Right
-                </select>
+                <select id="approachPlayRightSelect"></select>
+                <label id="approachPlayRightLabel"></label>
             </div>
         </div>
-
         <div class="rTableRow">
-            <div class="rTableCell">  Focus The Play</div>
+            <div class="rTableCell">Focus The Play</div>
             <div class="rTableCell">
-                <select id="approachPlayRight">
-                    <option value="" selected="selected">None
-                    <option value="">Focus play through the middle
-                    <option value="">Focus play down the left
-                    <option value="">Focus play down the right
-                    <option value="">Focus play down both flanks
-                </select>
+                <select id="focusPlaySelect"></select>
+                <label id="focusPlayLabel"></label>
             </div>
         </div>
     </div>
@@ -163,7 +151,7 @@
     }
 
     function populateSelect(id, mentality) {
-        var element = document.getElementById("select" + id)
+        var element = document.getElementById("select" + id);
         this.getDuty(element, mentality);
     }
 
@@ -216,6 +204,16 @@
         tc.appendChild(containerDiv);
     }
 
+    function createAndPopulateSelect(selectName, labelName, data) {
+        var select = document.querySelector(`#${selectName}`);
+        var label = document.querySelector(`#${labelName}`);
+
+        select.addEventListener('change', function() {
+            var selectedIndex = this.value;
+            label.textContent = selectedIndex > 0 ? label.textContent = data[selectedIndex] : label.textContent = "";
+        });
+    }
+
     //overlap left add one to LB, ML minus one, AML minus one
     //underlap left ML minus one, AML minus one
 
@@ -230,10 +228,7 @@
         5: ['Select', 'D', 'Co', 'St', 'S', 'A'],
     }
 
-    var oldTeamMentality = 3;
-
     var teamMentalitySelect = document.querySelector('#teamMentalitySelect');
-
     var teamMentalityLabel = document.querySelector('#teamMentalityLabel');
     
     teamMentalitySelect.addEventListener('change', function () {
@@ -263,6 +258,31 @@
         });
     });
 
+    var focusPlay = [
+        "Select",
+        "Focus play through the middle",
+        "Focus play down the left",
+        "Focus play down the right",
+        "Focus play down both flanks"
+    ];
+
+    var approachPlayRight = [
+        "Select",
+        "Overlap Right",
+        "Underlap Right"
+    ];
+
+    var approachPlayLeft = [
+        "Select",
+        "Overlap Left",
+        "Underlap Left"
+    ];
+
+
+    this.createAndPopulateSelect('focusPlaySelect', 'focusPlayLabel', this.focusPlay);
+    this.createAndPopulateSelect('approachPlayRightSelect', 'approachPlayRightLabel', this.approachPlayRight);
+    this.createAndPopulateSelect('approachPlayLeftSelect', 'approachPlayLeftLabel', this.approachPlayLeft);
+
     var teamMentality = [
         "Select",
         "Very Defensive" ,
@@ -282,6 +302,13 @@
     var supportDuty = [0, 3, 3, 3, 4, 5, 5, 5];
     var attackDuty = [0, 4, 4, 5, 6, 7, 7, 7];
 
+    var insideForwardSupport = [0, 4, 4, 5, 6, 7, 7, 7];
+    var insideForwardAttack = [0, 5, 5, 5, 6, 7, 7, 7];
+
+    var strikerDefend = [0, 1, 1, 1, 2, 3, 3, 3];
+    var strikerSupport = [0, 2, 2, 2, 3, 4, 4, 4];
+    var strikerAttack = [0, 5, 5, 5, 6, 7, 7, 7];
+
     var positionMatrix = [
         { id: 1, dropDownId: '1', position: "GK", 1: defendDuty, 2: supportDuty, 3: attackDuty },
         { id: 2, dropDownId: '1', position: "DR", 1: defendDuty, 2: supportDuty, 3: defenderAttack },
@@ -299,14 +326,14 @@
         { id: 14, dropDownId: '1', position: "MC", 1: defendDuty, 2: supportDuty, 3: attackDuty },
         { id: 15, dropDownId: '1', position: "MCL", 1: defendDuty, 2: supportDuty, 3: attackDuty },
         { id: 16, dropDownId: '1', position: "ML", 1: defendDuty, 2: supportDuty, 3: attackDuty },
-        { id: 17, dropDownId: '3', position: "AMR", 1: supportDuty, 2: attackDuty, 3: [0, 3, 3, 3, 4, 5, 5, 5], 4: [0, 4, 4, 5, 7, 7, 7, 7]},
+        { id: 17, dropDownId: '3', position: "AMR", 1: supportDuty, 2: attackDuty, 3: insideForwardSupport, 4: insideForwardAttack},
         { id: 18, dropDownId: '4', position: "AMCR", 1: supportDuty, 2: attackDuty },
         { id: 19, dropDownId: '4', position: "AMC", 1: supportDuty, 2: attackDuty },
         { id: 20, dropDownId: '4', position: "AMCL", 1: supportDuty, 2: attackDuty },
-        { id: 21, dropDownId: '3', position: "AML", 1: supportDuty, 2: attackDuty, 3: [0, 3, 3, 3, 4, 5, 5, 5], 4: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 22, dropDownId: '1', position: "STR",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 23, dropDownId: '1', position: "STC",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] },
-        { id: 24, dropDownId: '1', position: "STL",  1: [0, 1, 1, 1, 2, 3, 4, 4], 2: [0, 3, 3, 3, 4, 5, 5, 5], 3: [0, 4, 4, 5, 7, 7, 7, 7] }
+        { id: 21, dropDownId: '3', position: "AML", 1: supportDuty, 2: attackDuty, 3: insideForwardSupport, 4: insideForwardAttack },
+        { id: 22, dropDownId: '1', position: "STR", 1: strikerDefend, 2: strikerSupport, 3: strikerAttack },
+        { id: 23, dropDownId: '1', position: "STC", 1: strikerDefend, 2: strikerSupport, 3: strikerAttack },
+        { id: 24, dropDownId: '1', position: "STL", 1: strikerDefend, 2: strikerSupport, 3: strikerAttack }
 
     ];
 
@@ -319,7 +346,7 @@
 
         var positionSelect = document.querySelector('#select' + x.id);
         var positionMentalityId = document.querySelector('#positionMentality' + x.id);
-        positionMentalityId.InnerHTML = "Empty";
+        //positionMentalityId.InnerHTML = "Empty";
 
         positionSelect.addEventListener('change', function () {
 
@@ -345,11 +372,11 @@
     }); 
     
     populateSelect2("teamMentalitySelect", this.teamMentality);
+    populateSelect2("approachPlayLeftSelect", this.approachPlayLeft);
+    populateSelect2("approachPlayRightSelect", this.approachPlayRight);
+    populateSelect2("focusPlaySelect", this.focusPlay);
 
 
 </script>
 </body>
-
-
 </html>
-
