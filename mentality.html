@@ -184,8 +184,6 @@
         "Very Attacking" 
     ];
 
-  
-
     //Fullback and Wing back
     var defenderApproachPlayUnSelected = [{ 1: defendDuty, 2: supportDuty, 3: attackDuty }];
     var defenderApproachPlayOverlap = [{ 1: [0, 2, 2, 2, 3, 4, 4, 4], 2: [0, 2, 2, 2, 3, 4, 4, 4], 3: [0, 2, 2, 2, 3, 4, 4, 4] }];
@@ -208,10 +206,7 @@
     var attackingMidfieldApproachPlayRightIndex = [17];
     var attackingMidfieldApproachPlayLeftIndex = [21];
     var attackMidfieldApproachPlay = [ attackMidUnSelected, attacingkMidfieldrApproachPlayOverlap, attackingMidfieldrApproachPlayUnderlap];
-
-   
-
-
+    
     function populateSelect2(dropDownName, data) {
         for (var i = 0; i < data.length; i++) {
             var opt = data[i];
@@ -336,26 +331,6 @@
         console.log("Focus Play " + index);
     }
 
-    function getPositionMentalityDescription(data, id, selectedIndex, selectedTeamMentality) {
-        return data[id][selectedIndex][selectedTeamMentality];
-    }
-
-    function getPositionMatrixMentalityDescription(id, selectedIndex, selectedTeamMentality) {
-        return positionMatrix[id][selectedIndex][selectedTeamMentality];
-    }
-
-  
-
-    function getDefaultPositionMentality(data, selectedPosition, selectedIndex, selectedTeamMentality) {
-        //return positionMatrix[selectedPosition - 1][selectedIndex][selectedTeamMentality];
-        return data[selectedPosition - 1][selectedIndex][selectedTeamMentality];
-    }
-
-    function getApproachPlayPositionMentality(data, selectedPosition, selectedIndex, selectedTeamMentality) {
-        //return data[0][selectedIndex][selectedTeamMentality];
-        return data[selectedPosition][selectedIndex][selectedTeamMentality];
-    }
-
     function getSelectedTeamMentalityIndex() {
         const teamMentalitySelect = document.getElementById("teamMentalitySelect");
         const selectedTeamMentality = teamMentalitySelect.options[teamMentalitySelect.selectedIndex].value;
@@ -368,13 +343,6 @@
         return parseInt(selectedIndex);
     }
 
-
-    var approachPlayRightPositionMentality = {
-        "0" : getDefaultPositionMentality,
-        "1" : getApproachPlayPositionMentality,
-        "2" : getApproachPlayPositionMentality
-    }
-    
     function setMentality(index, positionData) {
         const selectedTeamMentality = getSelectedTeamMentalityIndex();
         const selectedPositionMentality = getSelectedPositionMentalityIndex(index);
@@ -384,7 +352,6 @@
             this.labelSelectorWithTextContext(`#positionMentality${index}`, this.teamMentality[positionMentality]);
         }
     }
-
 
     function approachPlayRightCallback(approachPlaySelectIndex) {
         console.log("Approach Play Right " + approachPlaySelectIndex);
