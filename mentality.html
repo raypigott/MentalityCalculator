@@ -142,7 +142,6 @@
         { id: 22, dropDownId: '1', position: "STR", 1: strikerDefend, 2: strikerSupport, 3: strikerAttack },
         { id: 23, dropDownId: '1', position: "STC", 1: strikerDefend, 2: strikerSupport, 3: strikerAttack },
         { id: 24, dropDownId: '1', position: "STL", 1: strikerDefend, 2: strikerSupport, 3: strikerAttack }
-
     ];
 
     var duty = {
@@ -184,7 +183,6 @@
         "Very Attacking" 
     ];
 
-    //Fullback and Wing back
     var defenderApproachPlayUnSelected = [{ 1: defendDuty, 2: supportDuty, 3: attackDuty }];
     var defenderApproachPlayOverlap = [{ 1: [0, 2, 2, 2, 3, 4, 4, 4], 2: [0, 2, 2, 2, 3, 4, 4, 4], 3: [0, 2, 2, 2, 3, 4, 4, 4] }];
     var defenderApproachPlayUnderlap = [{ 1: defendDuty, 2: supportDuty, 3: defenderAttack }];
@@ -334,30 +332,36 @@
     function getSelectedTeamMentalityIndex() {
         const teamMentalitySelect = document.getElementById("teamMentalitySelect");
         const selectedTeamMentality = teamMentalitySelect.options[teamMentalitySelect.selectedIndex].value;
-        return parseInt(selectedTeamMentality);
+        return selectedTeamMentality;
     }
 
     function getSelectedPositionMentalityIndex(x) {
         const select = document.getElementById(`select${x}`);
         const selectedIndex = select.options[select.selectedIndex].value;
-        return parseInt(selectedIndex);
+        return selectedIndex;
     }
 
     function setMentality(index, positionData) {
         const selectedTeamMentality = getSelectedTeamMentalityIndex();
         const selectedPositionMentality = getSelectedPositionMentalityIndex(index);
-        const positionMentality = positionData[0][selectedPositionMentality][selectedTeamMentality];
+        const positionMentality = filterNonSelection(positionData, selectedTeamMentality, selectedPositionMentality);
 
         if (positionMentality > 0) {
             this.labelSelectorWithTextContext(`#positionMentality${index}`, this.teamMentality[positionMentality]);
         }
     }
-
+    
+    function filterNonSelection(positionData, selectedTeamMentality, selectedPositionMentality) {
+        return selectedPositionMentality === "0"
+            ? 0
+            : positionData[0][selectedPositionMentality][selectedTeamMentality];
+    }
+    
     function approachPlayRightCallback(approachPlaySelectIndex) {
         console.log("Approach Play Right " + approachPlaySelectIndex);
         
         attackingMidfieldApproachPlayRightIndex.forEach(x => {
-            const positionData = this.attackMidfieldApproachPlay[parseInt(approachPlaySelectIndex)];
+            const positionData = this.attackMidfieldApproachPlay[approachPlaySelectIndex];
             setMentality(x, positionData);
         });
 
