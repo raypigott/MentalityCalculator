@@ -3,7 +3,6 @@
     <style>
         .rTable {
             display: table;
-            
         }
         .rTableRow { display: table-row; }
         .rTableHeading { display: table-header-group; }
@@ -13,13 +12,11 @@
             padding: 3px 10px;
             border: 1px solid #999999;
         }
-
         .rTable1 {
             display: table;
             width: 50%;
             background-color: #008000
         }
-
         .position {
             display: block;
         }
@@ -183,13 +180,25 @@
         "Very Attacking" 
     ];
 
+    var none = 0;
+    var veryDefensive = 1;
+    var defensive = 2;
+    var cautious = 3;
+    var balanced = 4;
+    var positive = 5;
+    var attacking = 6;
+    var veryAttacking = 7;
+
     var defenderApproachPlayUnSelected = [{ 1: defendDuty, 2: supportDuty, 3: attackDuty }];
-    var defenderApproachPlayOverlap = [{ 1: [0, 2, 2, 2, 3, 4, 4, 4], 2: [0, 2, 2, 2, 3, 4, 4, 4], 3: [0, 2, 2, 2, 3, 4, 4, 4] }];
+    var defenderApproachPlayOverlap = [{
+        1: [0, defensive, defensive, defensive, cautious, balanced, balanced, balanced],
+        2: [0, cautious, balanced, positive, attacking, attacking, attacking, attacking],
+        3: [0, positive, positive, positive, attacking, veryAttacking, veryAttacking, veryAttacking]
+    }];
     var defenderApproachPlayUnderlap = [{ 1: defendDuty, 2: supportDuty, 3: defenderAttack }];
     var defenderApproachPlayRightIndex = [2, 7];
     var defenderApproachPlayLeftIndex = [6, 11];
     var defenderApproachPlay = [defenderApproachPlayUnSelected, defenderApproachPlayOverlap, defenderApproachPlayUnderlap];
-
 
     var midfielderApproachPlayUnselected = [{ 1: defendDuty, 2: supportDuty, 3: attackDuty}];
     var midfielderApproachPlayOverlap =  [{ 1: [0, 1, 1, 1, 2, 3, 3, 3], 2: [0, 2, 2, 2, 3, 4, 5, 5], 3: [0, 4, 4, 4, 5, 6, 7, 7] }];
@@ -199,16 +208,60 @@
     var midfielderApproachPlay = [midfielderApproachPlayUnselected, midfielderApproachPlayOverlap, midfielderApproachPlayUnderlap];
     
     var attackMidUnSelected = [{ 1: supportDuty, 2: attackDuty, 3: insideForwardSupport, 4: insideForwardAttack }];
-    var attacingkMidfieldrApproachPlayOverlap = [{ 1: [0, 2, 2, 2, 3, 4, 5, 5], 2: [0, 4, 4, 4, 5, 6, 7, 7], 3: [0, 4, 4, 4, 5, 6, 6, 6], 4: [0, 5, 5, 5, 6, 7, 7, 7] }];
-    var attackingMidfieldrApproachPlayUnderlap = [{ 1: [0, 2, 2, 2, 3, 4, 5, 5], 2: [0, 4, 4, 4, 5, 6, 7, 7], 3: [0, 4, 4, 4, 5, 6, 6, 6], 4: [0, 5, 5, 5, 6, 7, 7, 7] }];
+    var attacingkMidfieldrApproachPlayOverlap = [
+        {
+            1: [0, 2, 2, 2, 3, 4, 5, 5],
+            2: [0, 4, 4, 4, 5, 6, 7, 7],
+            3: [0, 4, 4, 4, 5, 6, 6, 6],
+            4: [0, 5, 5, 5, 6, 7, 7, 7]
+        }];
+    var attackingMidfieldrApproachPlayUnderlap = [
+        {
+            1: [0, 2, 2, 2, 3, 4, 5, 5],
+            2: [0, 4, 4, 4, 5, 6, 7, 7],
+            3: [0, 4, 4, 4, 5, 6, 6, 6],
+            4: [0, 5, 5, 5, 6, 7, 7, 7]
+        }];
     var attackingMidfieldApproachPlayRightIndex = [17];
     var attackingMidfieldApproachPlayLeftIndex = [21];
-    var attackMidfieldApproachPlay = [ attackMidUnSelected, attacingkMidfieldrApproachPlayOverlap, attackingMidfieldrApproachPlayUnderlap];
-    
+    var attackMidfieldApproachPlay = [attackMidUnSelected, attacingkMidfieldrApproachPlayOverlap, attackingMidfieldrApproachPlayUnderlap];
+
+
+    //if both are selected use focus play
+    var defenderFocusPlayWide = [
+        {
+            1: [none, cautious, cautious, cautious, balanced, balanced, balanced, balanced],
+            2: [none, balanced, balanced, balanced, positive, attacking, attacking, attacking],
+            3: [none, attacking, attacking, attacking, veryAttacking, veryAttacking, veryAttacking, veryAttacking]
+        }];
+
+    var goalKeeperFocusMiddle = [
+        {
+            1: [none, cautious, cautious, cautious, balanced, balanced, balanced, balanced],
+            2: [none, balanced, balanced, balanced, positive, attacking, veryAttacking, veryAttacking],
+            3: [none, positive, positive, attacking, veryAttacking, veryAttacking, veryAttacking, veryAttacking]
+        }];
+
+    var defensiveMidfielderFocusMiddle = [
+        {
+            1: [none, veryDefensive, veryDefensive, defensive, cautious, balanced, positive, positive],
+            2: [none, cautious, cautious, balanced, positive, attacking, veryAttacking, veryAttacking],
+            3: [none, positive, positive, attacking, veryAttacking, veryAttacking, veryAttacking, veryAttacking]
+        }];
+
+    var centralDefenderFocusMiddle = [
+        {
+            1: [none, veryDefensive, veryDefensive, defensive, cautious, balanced, positive, positive],
+            2: [none, veryDefensive, veryDefensive, defensive, cautious, balanced, balanced, balanced],
+            3: [none, defensive, defensive, cautious, balanced, positive, attacking, attacking],
+            4: [none, cautious, cautious, balanced, positive, attacking, veryAttacking, veryAttacking],
+            5: [none, positive, positive, positive, attacking, veryAttacking, veryAttacking, veryAttacking]
+        }];
+
     function populateSelect2(dropDownName, data) {
-        for (var i = 0; i < data.length; i++) {
-            var opt = data[i];
-            var el = document.createElement("option");
+        for (let i = 0; i < data.length; i++) {
+            const opt = data[i];
+            const el = document.createElement("option");
             el.textContent = opt;
             el.value = i;
             document.getElementById(dropDownName).appendChild(el);
@@ -325,25 +378,34 @@
         });
     });
 
+
     function callbackOne(index) {
         console.log("Focus Play " + index);
     }
 
+    function getCurrentDropdownSelection(elementId) {
+        const selectElement = document.getElementById(elementId);
+        const selectedIndex = selectElement.options[selectElement.selectedIndex].value;
+        return parseInt(selectedIndex);
+    }
+
     function getSelectedTeamMentalityIndex() {
-        const teamMentalitySelect = document.getElementById("teamMentalitySelect");
-        const selectedTeamMentality = teamMentalitySelect.options[teamMentalitySelect.selectedIndex].value;
-        return selectedTeamMentality;
+        return getCurrentDropdownSelection("teamMentalitySelect");
     }
 
     function getSelectedPositionMentalityIndex(x) {
-        const select = document.getElementById(`select${x}`);
-        const selectedIndex = select.options[select.selectedIndex].value;
-        return selectedIndex;
+        return getCurrentDropdownSelection(`select${x}`);
+    }
+
+    function getSelectedFocusPlayIndex() {
+        return getCurrentDropdownSelection("focusPlaySelect");
     }
 
     function setMentality(index, positionData) {
         const selectedTeamMentality = getSelectedTeamMentalityIndex();
+        console.log('selectedTeamMentality: ' + selectedTeamMentality);
         const selectedPositionMentality = getSelectedPositionMentalityIndex(index);
+        console.log('selectedPositionMentality: ' + selectedPositionMentality);
         const positionMentality = filterNonSelection(positionData, selectedTeamMentality, selectedPositionMentality);
 
         if (positionMentality > 0) {
@@ -352,13 +414,15 @@
     }
     
     function filterNonSelection(positionData, selectedTeamMentality, selectedPositionMentality) {
-        return selectedPositionMentality === "0"
+        return selectedPositionMentality === 0
             ? 0
-            : positionData[0][selectedPositionMentality][selectedTeamMentality];
+            : positionData[0][selectedPositionMentality][selectedTeamMentality];;
     }
-    
+
     function approachPlayRightCallback(approachPlaySelectIndex) {
         console.log("Approach Play Right " + approachPlaySelectIndex);
+
+        const focusPlaySelectIndex = getSelectedFocusPlayIndex();
         
         attackingMidfieldApproachPlayRightIndex.forEach(x => {
             const positionData = this.attackMidfieldApproachPlay[approachPlaySelectIndex];
@@ -370,10 +434,14 @@
             setMentality(x, positionData);
         });
 
-        defenderApproachPlayRightIndex.forEach(x => {
-            const positionData = this.defenderApproachPlay[approachPlaySelectIndex];
-            setMentality(x, positionData);
-        });
+        wideDefenderMentalityAdjustment(defenderApproachPlayRightIndex, focusPlaySelectIndex, approachPlaySelectIndex);
+    }
+
+    function wideDefenderMentality(focusPlayIndex, approachPlaySelectIndex) {
+        //focus play down the right
+        return focusPlayIndex === 3
+            ? defenderFocusPlayWide[0]
+            : defenderApproachPlay[approachPlaySelectIndex];
     }
 
     function labelSelectorWithTextContext(selectors, textContent) {
@@ -383,6 +451,8 @@
 
     function approachPlayLeftCallback(approachPlaySelectIndex) {
         console.log("Approach Play Left " + approachPlaySelectIndex);
+
+        const focusPlaySelectIndex = getSelectedFocusPlayIndex();
 
         attackingMidfieldApproachPlayLeftIndex.forEach(x => {
             const positionData = this.attackMidfieldApproachPlay[approachPlaySelectIndex];
@@ -394,8 +464,13 @@
             setMentality(x, positionData);
         });
 
-        defenderApproachPlayLeftIndex.forEach(x => {
-            const positionData = this.defenderApproachPlay[approachPlaySelectIndex];
+        wideDefenderMentalityAdjustment(defenderApproachPlayLeftIndex, focusPlaySelectIndex, approachPlaySelectIndex);
+    }
+
+    function wideDefenderMentalityAdjustment(positionsToAdjust, focusPlaySelectIndex, approachPlaySelectIndex) {
+        positionsToAdjust.forEach(x => {
+            console.log(x);
+            const positionData = wideDefenderMentality(focusPlaySelectIndex, approachPlaySelectIndex);
             setMentality(x, positionData);
         });
     }
@@ -428,7 +503,7 @@
 
                 var index = x[mentalityIndex][selectedTeamMentality];
 
-                console.log(teamMentality[index]);
+                //console.log(teamMentality[index]);
 
                 positionMentalityId.textContent = teamMentality[index];
             } else {
